@@ -1,28 +1,20 @@
-# Use slim Python image
-FROM python:3.11-slim
+FROM python:3.10-slim
 
-# Avoid tz/locale prompts during apt
-ENV DEBIAN_FRONTEND=noninteractive \
-    PYTHONUNBUFFERED=1
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    tesseract-ocr \
+    libtesseract-dev \
+    poppler-utils \
+    && apt-get clean
 
-# System deps required by Tesseract & OpenCV
-RUN apt-get update \
- && apt-get install -y --no-install-recommends \
-      tesseract-ocr libtesseract-dev \
-      libgl1 libglib2.0-0 \
- && rm -rf /var/lib/apt/lists/*
-
+# Set work directory
 WORKDIR /app
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of your code
+# Copy files
 COPY . .
 
-# Tell pytesseract where the binary is (Linux)
-ENV TESSERACT_CMD=/usr/bin/tesseract
-# (If your code uses pytesseract directly, this is enough.)
-# You can also set it in code: pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Start your bot
+# Run bot
 CMD ["python", "bot.py"]
