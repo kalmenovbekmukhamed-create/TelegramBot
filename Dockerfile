@@ -1,20 +1,17 @@
-FROM python:3.10-slim
+# Dockerfile
+FROM python:3.11-slim
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    tesseract-ocr \
-    libtesseract-dev \
-    poppler-utils \
-    && apt-get clean
+# Install Tesseract + useful utils
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tesseract-ocr libtesseract-dev libleptonica-dev poppler-utils \
+ && rm -rf /var/lib/apt/lists/*
 
-# Set work directory
 WORKDIR /app
-
-# Copy files
-COPY . .
-
-# Install Python dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Run bot
+COPY . .
+ENV PYTHONUNBUFFERED=1
+
+# Start your bot
 CMD ["python", "bot.py"]
