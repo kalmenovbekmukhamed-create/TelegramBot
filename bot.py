@@ -2,8 +2,14 @@ import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 import os
-TOKEN = os.getenv("8467893329:AAExBNZBDWqvlaidADEzv-HulASfYBlsihQ")
+from telegram.ext import ApplicationBuilder
 
+BOT_TOKEN = os.getenv("TELEGRAM_TOKEN")
+if not BOT_TOKEN:
+    raise RuntimeError("TELEGRAM_TOKEN env var is missing")
+
+app = ApplicationBuilder().token(BOT_TOKEN).build()
+# ... rest of your handlers and app.run_polling()
 
 logging.basicConfig(level=logging.INFO)
 
