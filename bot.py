@@ -2,7 +2,7 @@ import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 
-BOT_TOKEN = "YOUR_NEW_TOKEN_HERE"  # Replace later via Environment in Render
+BOT_TOKEN = "8467893329:AAGeC4Ll3LsWLOFwQmyzklU8Al_WoxmPfQw"  # Replace later via Environment in Render
 
 logging.basicConfig(level=logging.INFO)
 
