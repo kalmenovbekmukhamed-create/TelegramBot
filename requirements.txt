@@ -1,4 +1,5 @@
 python-telegram-bot==20.3
 pytesseract
 Pillow
-httpx==0.24.1
+numpy
+opencv-python-headless
